@@ -1,5 +1,3 @@
-import os
-import sys
 
 # URLs:
 baseUrl = "https://appdemo.docusign.com"
@@ -17,13 +15,13 @@ senderName = "Docusign Sender"
 senderEmail = "docusignsender01@gmail.com"
 approver1Email = "docusignapprover1@gmail.com"
 approver2Email = "docusignapprover2@gmail.com"
-pharma_email = "apparao.jajimoggala@pharmateksol.com"
+pharma_email = "testmail@pharmateksol.com"
 
 # userData:
 senderPassword = "Pharmatek@321"
 approver1Password = "Pharmatek@321"
 approver2Password = "Pharmatek@321"
-password1 = "kArthiDev@059049"
+password1 = "abc123"
 
 # Data:
 userAPI = "[api:49.37.133.171]"
@@ -34,6 +32,9 @@ customFilter = "Last 12 Months"
 postalCode = "12345"
 send_documents_for_signature = "Send documents for signature"
 success_message = "Successfully sent"
+date_time_format = "MM-dd-yyyy | HH:mm"
+decline_status = "Declined"
+decline_reason = "Testing"
 
 # Reports:
 envelope_file_pdf = "'Envelope2.pdf'"

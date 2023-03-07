@@ -11,9 +11,8 @@ import pytest
 class Test_DeclineEnvelope():
     def test_declineEnvelope(self):
 
-        # Verify data:
         driver = self.driver
-        '''self.driver.get(constants.baseUrl)
+        self.driver.get(constants.baseUrl)
         login = Login_Page(driver)
         login.login_page(constants.senderEmail, constants.senderPassword)
 
@@ -25,13 +24,13 @@ class Test_DeclineEnvelope():
         sign = Add_Signature(driver)
         sign.add_signature()
         user = Util_Test(driver)
-        user.logout()'''
+        user.logout()
 
         # Login as approver1 and decline e-sign
         self.driver.get(constants.baseUrl)
         login = Login_Page(driver)
         login.login_page(constants.approver1Email, constants.approver1Password)
         decline = Approve_Envelope(driver)
-        decline.approve_document(False)
+        decline.approve_document(True)
         login.login_page(constants.approver1Email, constants.approver1Password)
         decline.decline_envelope()

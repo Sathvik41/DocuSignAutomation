@@ -61,6 +61,7 @@ class Audit_Logs():
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, self.apply_button))).click()
         self.driver.save_screenshot("./screenshots/Audit_Logs.png")
         time.sleep(5)
-        audit_logs_new_value = self.driver.find_element(By.XPATH, self.new_value_cell).text
+        audit_logs_new_value = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((
+            By.XPATH, self.new_value_cell))).text
         print(audit_logs_new_value)
         assert company_name_field == audit_logs_new_value

@@ -5,6 +5,7 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.loginPage import Login_Page
 from testData import constants as constants
+from utilities.utils import Util_Test
 import time
 
 
@@ -36,6 +37,10 @@ class Approve_Envelope():
         self.decline_reason_text_box = "//textarea[@data-qa='decline-dialog-reason-text']"
         self.decline_to_sign_button = "//button[@data-qa='decline-dialog-decline-to-sign']"
         self.document_status = "//span[@data-qa='detail-status-title']"
+        self.more_dropDown = "//button[@data-qa='document-more']"
+        self.void_option = "//button[@data-qa='envelope-action-void']"
+        self.void_reason_box = "//*[@data-qa='input-reason-for-voiding']"
+        self.void_button = "//button[@data-qa='modal-confirm-btn']"
 
     def approve_document(self, docx=False):
         WebDriverWait(self.driver, 40).until(
@@ -58,7 +63,7 @@ class Approve_Envelope():
             if handle != main_window:
                 popup = handle
                 self.driver.switch_to.window(popup)
-        drop_down = self.driver.find_element(By.ID, self.signing_reason)
+        drop_down = self.driver.find_element(By.ID, self.signing_reason).is_clickable()
         select_method = Select(drop_down)
         select_method.select_by_visible_text(constants.signingReason)
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, self.dialog_submit))).click()
@@ -131,18 +136,43 @@ class Approve_Envelope():
 
     def decline_envelope(self):
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, self.other_actions))).click()
-        # import pdb
-        # pdb.set_trace()
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, self.decline_to_sign))).click()
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((
             By.XPATH, self.decline_continue_button))).click()
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((
-            By.XPATH, self.decline_reason_text_box))).send_keys("Testing")
+            By.XPATH, self.decline_reason_text_box))).send_keys(constants.decline_reason)
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((
             By.XPATH, self.decline_to_sign_button))).click()
         doc_status = WebDriverWait(self.driver, 50).until(EC.element_to_be_clickable((
             By.XPATH, self.document_status))).text
+        self.driver.save_screenshot('./screenshots/Decline_Envelope.png')
         print(doc_status)
-        assert doc_status == 'Declined'
+        assert doc_status == constants.decline_status
+
+    def void_envelope(self):
+        WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.XPATH, self.manage_tab))).click()
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, self.select_envelope_docx))).click()
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, self.more_dropDown))).click()
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, self.void_option))).click()
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, self.void_reason_box))).send_keys('Testing')
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, self.void_button))).click()
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, self.select_envelope_docx))).click()
+        document_status = WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, self.document_status))).text
+        print(document_status)
+        self.driver.save_screenshot('./screenshots/Voided_Envelope.png')
+        assert document_status == 'Voided'
+
+
+
+
+
+
+
 
 

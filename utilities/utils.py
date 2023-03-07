@@ -4,11 +4,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from testData import constants as constants
-import logging as logger
-import random
-import string
 import pandas as pd
 from pathlib import Path
+
+import time
+
+from PIL import Image
+# Install Image package
 
 
 def get_project_root() -> Path:
@@ -74,7 +76,8 @@ class Util_Test():
     def my_preferences(self):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.my_preferences))).click()
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.regional_settings))).click()
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.date_time_format))).Editable
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.date_time_format)))
+
 
 
 
